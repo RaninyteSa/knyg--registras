@@ -2,6 +2,7 @@ import express from 'express'
 import db from '../database/connect.js'
 import { auth } from '../midleware/auth.js'
 import { postValidator } from '../midleware/validate.js'
+import upload from '../midleware/multer.js'
 
 const router = express.Router()
 
@@ -16,12 +17,22 @@ router.get('/:id', async (req, res) => {
     res.json(post)
 })
 
-router.post('/', auth, postValidator,  async (req, res) => {
-    new db.Posts(req.body).save()
-    res.json({ message: 'Įrašas sėkmingai sukurtas' })
+router.post('/',auth, upload.single('nuotrauka'),  postValidator,  async (req, res) => {
+    console.log(req.file);
+    try {
+        if(req.file) 
+            req.body.nuotrauka = '/uploads/' + req.file.filename
+            
+        new db.Posts(req.body).save()
+        res.send('Įrašas sėkmingai sukurtas')
+    } catch (error) {
+        res.status(500).send('Įviko serverio klaida')
+    }
+    
+    
 })
 
-router.put('/edit/:id', auth , async (req, res) => {
+router.put('/edit/:id', auth , upload.single('nuotrauka'), async (req, res) => {
     const post = await db.Posts.findByPk(req.params.id)
     post.update(req.body)
     res.json({ message: 'Įrašas sėkmingai atnaujintas'})

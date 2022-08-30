@@ -25,12 +25,21 @@ const Logout = (props) => {
             })
             setTimeout(() =>  navigate('/'), 2000) 
         })
+        .catch(error => {
+            setAlert({
+                message: error.response.data,
+                status: 'danger'
+            })
+            setTimeout(() => navigate('/'), 2000)
+        })
  
     }, [navigate])
 
     return alert.message && (
-        <div className={'alert alert-' + alert.status}>
-            {alert.message}
+        <div className="container">
+            <div className={'alert alert-' + alert.status}>
+                {alert.message}
+            </div>
         </div>
     )
 }

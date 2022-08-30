@@ -14,6 +14,8 @@ app.use(cors())
 //Duomenų priėmimui JSON formatu
 app.use(express.json())
 
+app.use('/uploads', express.static('uploads'))
+
 //Duomenų priėmimui POST metodu
 app.use(express.urlencoded({extended: true}))
 

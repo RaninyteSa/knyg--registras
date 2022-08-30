@@ -9,6 +9,12 @@ const EditPost = () => {
         autorius: '',
         nuotrauka: ''
     })
+
+    const [alert, setAlert] = useState({
+        message: '',
+        status: ''
+    })
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,10 +42,22 @@ const EditPost = () => {
 
         axios.put('/api/posts/edit/' + id, post)
         .then(resp => {
-            navigate('/')
-        }, [navigate])
-     
-        
+            setAlert({
+                message: resp.data,
+                status: 'success'
+            })
+
+            window.scrollTo(0, 0)
+
+            setTimeout(() => navigate('/'), 2000)
+        })
+        .catch(error => {
+            setAlert({
+                message: error.response.data,
+                status: 'danger'
+            })
+        })
+
     }
 
     return (
