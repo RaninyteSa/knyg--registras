@@ -1,0 +1,169 @@
+a.nav-link, a{
+  text-decoration: none;
+  color: rgb(253, 253, 253);
+  font-size: smaller;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  justify-content: center;
+  text-align: center;
+  
+ 
+}
+form {
+  margin-top: 10px;
+  padding: 7%;
+  font-size: 45px;
+  color:  rgb(245, 245, 245);
+}
+h3, h1 {
+  height: 25px;
+  margin: auto 0;
+  color: black;
+  padding: 15px;
+  border: 0ch;
+}
+
+li {
+  list-style-type: none;
+ }
+
+span.fs-4 {
+  text-align: center;
+  font-size: larger;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+div.image {
+  box-shadow: 1px 0px 1px  rgb(245, 245, 245);
+  border-radius: 16px  ;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 234px;
+  width: 213px;
+  margin: auto 68px;
+  
+
+ }
+
+ label {
+  color: black;
+ }
+
+ div .box {
+  box-shadow: 1px 0px 1px  rgb(245, 245, 245);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 14px;
+  margin: 15px 10px auto;
+  height: 340px;
+  width: 340px;
+  color:  rgb(245, 245, 245);
+  font-size: medium;
+  text-align: center;
+  background-color: rgb(245, 225, 200);
+}
+body {
+  background-image: url('https://i.pinimg.com/originals/cf/d8/d3/cfd8d326c1acad9837ba5a28e2a5f05f.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  margin: 0;
+  background-color: rgb(255, 255, 255);
+
+  
+
+}
+
+
+.single-post {
+  border-radius: 25px;
+  color:  rgb(245, 245, 245);
+  height: 510px;
+  width: 355px;
+  margin: 0 auto;
+  margin-top: 60px;
+  background-color:rgb(243, 222, 200);
+  justify-content: center;
+  text-align: center;
+
+}
+
+.content {
+  color:  rgb(245, 245, 245);
+  overflow-x: scroll;
+  margin: 0px auto;
+  height: 250px;
+  width: 210px;
+  align-content: space-around;
+  
+}
+
+.contentt {
+  color: black;
+}
+ 
+
+ .btn {
+  background-color: rgb(228, 201, 177);
+  color:  rgb(245, 245, 245);
+  margin: auto 5em;
+  padding: 1px 8px;
+  border-image: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: default;
+  box-sizing: border-box;
+  color: rgb(51, 54, 56);
+
+}
+
+.containerr {
+  
+
+  color:  rgb(245, 245, 245);
+  height: max-content;
+  margin: 8% auto;
+  text-align: center;
+}
+
+ .container {
+  color:  rgb(245, 245, 245);
+  text-shadow: 2px 2px 25px rgb(236, 215, 195);
+  font-weight: 200;
+  font-family: Arial, Helvetica, sans-serif;
+  
+ }
+ .header {
+  text-decoration: none;
+  color:  rgb(245, 245, 245);
+  font-size: 40px;
+  font-family: monospace;
+  justify-content: center;
+  text-align: center;
+  width: 96%;
+  height: 300px;
+  margin: 0 auto;
+  padding: 25px;
+  background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20220319/pngtree-photo-dead-flowers-of-flowers-image_1042908.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+ }
+
+  .articles{
+  justify-content: center;
+  padding: 5px 0;
+  display: flex;
+  flex-wrap: wrap;
+  color:  rgb(235, 226, 151);
+  font-size: medium;
+ } 
+.btn {
+  border-color: aliceblue;
+ }
+ 
