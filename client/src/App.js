@@ -27,7 +27,6 @@ const App = () => {
     <Header loggedIn={loggedIn} />
     <Routes>
       <Route path="/" element={<Home  loggedIn={loggedIn} />} />
-      <Route path="/post/:id" element={<SinglePost />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
       <Route path="/logout" element={<Logout setLoggedIn={setLoggedIn} />} />
@@ -37,6 +36,7 @@ const App = () => {
         </Route> */}
       {loggedIn &&
         <>
+          <Route path="/post/:id" element={<SinglePost />} />
           <Route path="/new-post" element={<NewPost />} />
           <Route path="/edit/:id" element={<EditPost />} />
         </>

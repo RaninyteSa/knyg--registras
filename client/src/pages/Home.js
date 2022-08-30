@@ -72,12 +72,11 @@ const Home = (props) => {
                     <div className="image" style={{backgroundImage:`url('${article.nuotrauka}')`, opacity: 1}}>
                       <img src={''} alt={''} />
                     </div>
-                    <Link to={'/post/' + article.id} className="btn">Skaityti plačiau</Link>
+                   
                     { loggedIn &&
                     <>
+                    <Link to={'/post/' + article.id} className="btn">Skaityti plačiau</Link>
                     <button onClick={() => handleDelete(article.id)} className="btn">Delete</button>
-                   
-      
                     <Link to={'/edit/' + article.id} className="btn">Edit</Link>
                     </>
                   }
