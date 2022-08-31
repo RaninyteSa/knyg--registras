@@ -3,18 +3,49 @@ import db from '../database/connect.js'
 import { auth } from '../midleware/auth.js'
 import { postValidator } from '../midleware/validate.js'
 import upload from '../midleware/multer.js'
+// import { any } from 'joi'
+import { Op } from 'sequelize'
 
 const router = express.Router()
 
 
 router.get('/', async (req, res) => {
-    const posts = await db.Posts.findAll()
+    const options = {}
+
+    if(req.query.order)
+        options.order= [['pavadinimas', 'DESC']]
+
+
+  try {
+    const posts = await db.Posts.findAll(options)
     res.json(posts)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('serverio kklaida')
+  }  
 })
 
 router.get('/:id', async (req, res) => {
     const post = await db.Posts.findByPk(req.params.id)
     res.json(post)
+})
+
+//paieska
+
+router.get('/search/:keyword', async (req, res) => {
+    try {
+        const posts = await db.Posts.findAll({
+            where: {
+                pavadinimas: {
+                    [Op.like]: '%' + req.params.keyword + '%'
+                }
+            }
+        })
+        res.json(posts)
+    } catch(error) {
+        console.log(error)
+        res.status(200).send('ivyko serverio klaida')
+    }
 })
 
 router.post('/',auth, upload.single('nuotrauka'),  postValidator,  async (req, res) => {

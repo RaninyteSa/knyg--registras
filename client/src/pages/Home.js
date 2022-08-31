@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import axios from 'axios'
 
 const Home = (props) => {
 
         const { loggedIn } = props
-    
+        const [keyword, setKeyword] = useState('')
         const [posts, setPosts] = useState([])
+        const [refresh, setRefresh] = useState(false)
         const [alert, setAlert] = useState({
           message: '',
           status: ''
@@ -24,7 +25,7 @@ const Home = (props) => {
               status: 'danger'
             })
           })
-        }, [alert])
+        }, [refresh])
       
         const handleDelete = (id) => {
           if(isNaN(id) || !loggedIn)
@@ -39,13 +40,19 @@ const Home = (props) => {
               message: resp.message,
               status: 'success'
             })
+
+            setRefresh(!refresh)
           })
           .catch(error => {
             console.log(error)
             setAlert({
-              message: 'Įvyko serverio klaida',
+              message: error.response.data,
               status: 'danger'
             })
+            window.scrollTo(0,0)
+
+            if (error.reesponse.status === 401 )
+            setTimeout(() => Navigate('/login'), 2000)
           })
           .finally(() => {
             setTimeout(() => setAlert({
@@ -53,8 +60,35 @@ const Home = (props) => {
               status: ''
             }), 3000)
           })
-          
+      
         }
+
+        const handleSearch = (e) => {
+          
+          e.preventDefault()
+
+          if(keyword === '')
+            return setRefresh(!refresh)
+
+            axios.get('/api/posts/search/' + keyword)
+            .then(resp => {
+              setPosts(resp.data)
+            })
+            .catch(error => {
+              console.log(error)
+              setAlert({
+                message: error.response.data,
+                status: 'danger'
+              })
+              window.scrollTo(0,0)
+            })
+            .finally(() => {
+              setTimeout(() => setAlert({
+                message: '',
+                status: ''
+              }), 3000)
+            }) 
+          }
       
         return (
           
@@ -64,6 +98,22 @@ const Home = (props) => {
                 {alert.message}
               </div>
             )}
+            <div className='filter'>
+              <form className='frm' onSubmit={handleSearch}>
+                <div className='search' >
+                  <input type='text' 
+                  className='form=control'
+                  placeholder='Paieskos fraze'
+                  onChange={(e) => setKeyword(e.target.value)}
+                  onBlur={(e) => {
+                    if(keyword === '')
+                    setRefresh(!refresh)
+                  }}
+                  />
+                  <button className='btn'>IEŠKOTI</button>
+                </div>
+              </form>
+            </div>
             <div className="articles">
               {posts && posts.map(article => {
                 return (
