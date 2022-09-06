@@ -3,6 +3,7 @@ import cors from 'cors'
 import session from 'express-session'
 import posts from './controller/posts.js' 
 import users from './controller/users.js' 
+import comments from './controller/comments.js'
 
 
 
@@ -35,6 +36,8 @@ app.use(session({
 app.use('/api/posts/', posts)
 
 app.use('/api/users/', users)
+
+app.use('/api/comments', comments)
 
 //Paleidžiame serverį
 app.listen(3000)

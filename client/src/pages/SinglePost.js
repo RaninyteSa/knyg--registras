@@ -37,6 +37,8 @@ const SinglePost = () => {
             <p> Viršelio autorius:   {post.virselioAutorius}    </p>
             <p> ISBN kodas:   {post.ISBN}    </p></div>
 
+            
+
         </div>
     )
 }
