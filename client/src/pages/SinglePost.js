@@ -8,11 +8,15 @@ import MainContext from '../MainContext'
 
 const SinglePost = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [post, setPost] = useState({})
     const [comment, setComment] = useState('')
-    const navigate = useNavigate()
-
-    const{ loggedIn } = useContext(MainContext)
+    const { loggedIn } = useContext(MainContext)
+    const [alert, setAlert] = useState({
+        message: '',
+        status: ''
+    })
+    const [refresh, setRefresh] = useState(false)
 
 
     useEffect(() => {
@@ -30,14 +34,36 @@ const SinglePost = () => {
             console.log(error)
             navigate('/')
         })
-    }, [])
+    }, [id, navigate, refresh])
 
     const handleForm = (e) => {
         e.preventDefault()
 
-        axios.post('/api/comments' , { comment, postId: id})
-        .then(resp => console.log(resp))
-        .catch(error => console.log(error))
+        axios.post('/api/comments/', { comment, postId: id })
+        .then(resp => {
+            setAlert({
+                message: resp.data,
+                status: 'success'
+            })
+            setComment('')
+
+            setRefresh(!refresh)
+
+            setTimeout(() => setAlert({
+                message: '',
+                status: ''
+            }), 2000)
+        })
+        .catch(error => {
+            console.log(error)
+            setAlert({
+                message: error.response.data,
+                status: 'danger'
+            })
+      
+            if(error.response.status === 401)
+                setTimeout(() => navigate('/login'), 2000)
+        })
     }
 
     return (
@@ -49,21 +75,36 @@ const SinglePost = () => {
             <div className='contentt'><p> Autorius:   {post.autorius}    </p>
             <p> Viršelio autorius:   {post.virselioAutorius}    </p>
             <p> ISBN kodas:   {post.ISBN}    </p></div>
+            {post.comments &&
+                    <div className="komentarai-kont">
+                        <h3 className='komentarai'>Vartotojų komentarai</h3>
+                        {post.comments.map(entry => 
+                            <li className='komentarai' key={entry.id}>
+                                {entry.comment}
+                            </li>    
+                        )}
+                    </div>
+                }
             { loggedIn ?
-            <div className='comment-form'>
-                <h2>Palikite savo komentara</h2>
+            <div className='komentarai-kont'>
+                <h2 className='komentarai'>Palikite savo komentara</h2>
+                {alert.message && (
+                        <div className={'my-2 alert alert-' + alert.status}>
+                        {alert.message}
+                        </div>
+                    )}
                 <form onSubmit={ (e) => handleForm(e) }>
                     <div>
-                    <label>komentaras</label>
+                    <label className='komentarai'>komentaras</label>
                     <textarea name='comment' onChange={(e) => setComment(e.target.value)}></textarea>   
                     </div>
                     <div>
-                        <button>skelbti komentara</button>
+                        <button className='komentarai'>skelbti komentara</button>
                     </div>
                 </form>
             </div>
             
-           : <div>'Prasome prisijungti jeigu norite komentuoti'</div> } 
+           : <div>'Prisijunkite norėdami palikti komentarą'</div> } 
 
 
         </div>
