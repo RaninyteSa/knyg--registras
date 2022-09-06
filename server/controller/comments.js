@@ -1,9 +1,18 @@
 import express from "express";
+import { auth } from "../midleware/auth.js";
+import { commentsValidator } from "../midleware/validate.js";
+import db from "../database/connect.js";
 
-const router = express.Router()
+const Router = express.Router()
 
-router.post('/' , (req,res) => {
-    res.send('veikia')
+Router.post('/' , auth, commentsValidator, async (req,res) => {
+    try {
+        await db.Comments.create(req.body)
+        res.send('Komentaras sekmingai issaugotas')
+    } catch (error)  {
+        console.log(error);
+        res.status(500).send('ivyko serverio klaida')
+    }
 })
 
-export default router
+export default Router

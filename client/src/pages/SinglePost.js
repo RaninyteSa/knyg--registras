@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
+import MainContext from '../MainContext'
 
 
 
@@ -8,7 +9,11 @@ import axios from 'axios'
 const SinglePost = () => {
     const { id } = useParams()
     const [post, setPost] = useState({})
+    const [comment, setComment] = useState('')
     const navigate = useNavigate()
+
+    const{ loggedIn } = useContext(MainContext)
+
 
     useEffect(() => {
         axios.get('/api/posts/' + id)
@@ -27,6 +32,14 @@ const SinglePost = () => {
         })
     }, [])
 
+    const handleForm = (e) => {
+        e.preventDefault()
+
+        axios.post('/api/comments' , { comment, postId: id})
+        .then(resp => console.log(resp))
+        .catch(error => console.log(error))
+    }
+
     return (
     
         <div className='single-post'>
@@ -36,8 +49,22 @@ const SinglePost = () => {
             <div className='contentt'><p> Autorius:   {post.autorius}    </p>
             <p> Viršelio autorius:   {post.virselioAutorius}    </p>
             <p> ISBN kodas:   {post.ISBN}    </p></div>
-
+            { loggedIn ?
+            <div className='comment-form'>
+                <h2>Palikite savo komentara</h2>
+                <form onSubmit={ (e) => handleForm(e) }>
+                    <div>
+                    <label>komentaras</label>
+                    <textarea name='comment' onChange={(e) => setComment(e.target.value)}></textarea>   
+                    </div>
+                    <div>
+                        <button>skelbti komentara</button>
+                    </div>
+                </form>
+            </div>
             
+           : <div>'Prasome prisijungti jeigu norite komentuoti'</div> } 
+
 
         </div>
     )
