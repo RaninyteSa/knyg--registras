@@ -80,8 +80,8 @@ const Admin = () => {
                         <td>{convertDate(post.createdAt)}</td>
                         <td>{convertDate(post.updatedAt)}</td>
                         <td>
-                    <button onClick={() => handleDelete(post.id)} className="btn">Delete</button>
-                    <Link to={'/edit/' + post.id} className="btn">Edit</Link>
+                          <button onClick={() => handleDelete(post.id)} className="btn">Delete</button>
+                          <Link to={'/admin/edit/' + post.id} className="btn">Edit</Link>
                         </td>
                     </tr>    
                 )}

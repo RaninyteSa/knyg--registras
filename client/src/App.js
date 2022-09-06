@@ -50,9 +50,11 @@ const App = () => {
           </Route> */}
         {loggedIn && userInfo.role === 1 &&
           <>
-            <Route path="/new-post" element={<NewPost />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/edit/:id" element={<EditPost />} />
+            <Route path="/admin" >
+            <Route index element={<Admin />} />  
+            <Route path="new-post" element={<NewPost />} />
+            <Route path="edit/:id" element={<EditPost />} />
+            </Route>
           </>
         }
       </Routes>

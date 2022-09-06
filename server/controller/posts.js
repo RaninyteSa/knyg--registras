@@ -1,8 +1,8 @@
 import express from 'express'
 import db from '../database/connect.js'
-import { auth } from '../midleware/auth.js'
 import { postValidator } from '../midleware/validate.js'
 import upload from '../midleware/multer.js'
+import { adminAuth } from '../midleware/auth.js'
 // import { any } from 'joi'
 import { Op } from 'sequelize'
 
@@ -77,7 +77,7 @@ router.get('/page/:page', async (req, res) => {
     }
 })
 
-router.post('/',auth, upload.single('nuotrauka'),  postValidator,  async (req, res) => {
+router.post('/', adminAuth , upload.single('nuotrauka'),  postValidator,  async (req, res) => {
     console.log(req.file);
     try {
         if(req.file) 
@@ -92,7 +92,7 @@ router.post('/',auth, upload.single('nuotrauka'),  postValidator,  async (req, r
     
 })
 
-router.put('/edit/:id', auth , upload.single('nuotrauka'), async (req, res) => {
+router.put('/edit/:id', adminAuth , upload.single('nuotrauka'), async (req, res) => {
     try {
         const post = await db.Posts.findByPk(req.params.id)
         post.update(req.body)
@@ -102,7 +102,7 @@ router.put('/edit/:id', auth , upload.single('nuotrauka'), async (req, res) => {
     }
 })
 
-router.delete('/delete/:id', auth , async (req, res) => {
+router.delete('/delete/:id', adminAuth , async (req, res) => {
     try {
         const post = await db.Posts.findByPk(req.params.id)
         post.destroy()

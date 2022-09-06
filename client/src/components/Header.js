@@ -15,16 +15,22 @@ const Header = () => {
                 <li className="nav-item">
                     <Link to="/" className="nav-link" aria-current="page">Home</Link>
                 </li>
+                {loggedIn && userInfo.role === 1 &&
+                <>
+                    <li className="nav-item">
+                        <Link to="/admin" className="nav-link" aria-current="page">Administratorius</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/admin/new-post" className="nav-link" aria-current="page">Naujas Straipsnis</Link>
+                    </li>
 
+                </>
+                }
                 {loggedIn ? (
                 <>
-                <li className="nav-item">
-                    <Link to="/new-post" className="nav-link" aria-current="page">Naujas Straipsnis</Link>
-                </li>
-                  
-                <li className="nav-item">
-                    <Link to="/logout" className="nav-link" aria-current="page">atsijungti</Link>
-                </li>
+                    <li className="nav-item">
+                        <Link to="/logout" className="nav-link" aria-current="page">atsijungti</Link>
+                    </li>
                 </>
                 ) : (
                 <>
