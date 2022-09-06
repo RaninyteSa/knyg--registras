@@ -9,6 +9,7 @@ import { Op } from 'sequelize'
 const router = express.Router()
 
 
+
 router.get('/', async (req, res) => {
     const options = {}
 
@@ -26,8 +27,23 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const post = await db.Posts.findByPk(req.params.id)
-    res.json(post)
+    try {
+        const post = await db.Posts.findByPk(req.params.id)
+        res.json(post)
+    } catch {
+        res.status(500).send('Įvyko serverio klaida')
+    }
+})
+
+router.get('/userpost/:id', async (req, res) => {
+    try {
+        const post = await db.Posts.findByPk(req.params.id, {
+            include: db.Users
+        })
+        res.json(post)
+    } catch {
+        res.status(500).send('Įvyko serverio klaida')
+    }
 })
 
 //paieska
@@ -40,6 +56,19 @@ router.get('/search/:keyword', async (req, res) => {
                     [Op.like]: '%' + req.params.keyword + '%'
                 }
             }
+        })
+        res.json(posts)
+    } catch(error) {
+        console.log(error)
+        res.status(200).send('ivyko serverio klaida')
+    }
+})
+
+router.get('/page/:page', async (req, res) => {
+    try {
+        const posts = await db.Posts.findAll({
+            limit: 10,
+            offset: 0
         })
         res.json(posts)
     } catch(error) {
@@ -64,15 +93,23 @@ router.post('/',auth, upload.single('nuotrauka'),  postValidator,  async (req, r
 })
 
 router.put('/edit/:id', auth , upload.single('nuotrauka'), async (req, res) => {
-    const post = await db.Posts.findByPk(req.params.id)
-    post.update(req.body)
-    res.json({ message: 'Įrašas sėkmingai atnaujintas'})
+    try {
+        const post = await db.Posts.findByPk(req.params.id)
+        post.update(req.body)
+        res.send('Įrašas sėkmingai atnaujintas')
+    } catch {
+        res.status(500).send('Įvyko serverio klaida')
+    }
 })
 
 router.delete('/delete/:id', auth , async (req, res) => {
-    const post = await db.Posts.findByPk(req.params.id)
-    post.destroy()
-    res.json({ message: 'Įrašas sėkmingai ištrintas' })
+    try {
+        const post = await db.Posts.findByPk(req.params.id)
+        post.destroy()
+        res.json({ message: 'Įrašas sėkmingai ištrintas' })
+    } catch {
+        res.status(500).send('Įvyko serverio klaida')
+    }
 })
 
 //CRUD - Create, Read, Update, Delete

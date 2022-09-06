@@ -25,7 +25,13 @@ try {
     database.Posts = Posts(sequelize)
     database.Users = Users(sequelize)
 
-    await sequelize.sync({ alter: false })
+    database.Users.hasMany(database.Posts, {
+        onDelete: 'RESTRICT',
+        onUpdate: 'RESTRICT'
+    }) 
+    database.Posts.belongsTo(database.Users)
+
+    await sequelize.sync({ alter: true })
 } catch(error) {
     console.log(error)
     console.log('Nepavyko prisijungti prie duomenų bazės');

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import MainContext from '../MainContext'
 
-
-const Header = ({ loggedIn }) => {
-    // const{ loggedIn }  = props
+const Header = () => {
+     const{ loggedIn, userInfo }  = useContext(MainContext)
     return (
         <div className="cont">
             <header className="header">
@@ -36,6 +37,9 @@ const Header = ({ loggedIn }) => {
                 </>
                 )}
             </ul>
+            {loggedIn && 
+                    <div className='msg'>Sveiki, {userInfo.first_name + ' ' + userInfo.last_name} 🖤  </div>
+                }
             </header>
         </div>
     

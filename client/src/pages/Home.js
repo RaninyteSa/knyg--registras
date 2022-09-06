@@ -1,18 +1,30 @@
-import { useState, useEffect } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import MainContext from '../MainContext'
+import { Link, useNavigate } from 'react-router-dom'
 
 import axios from 'axios'
 
-const Home = (props) => {
-
-        const { loggedIn } = props
-        const [keyword, setKeyword] = useState('')
-        const [posts, setPosts] = useState([])
-        const [refresh, setRefresh] = useState(false)
-        const [alert, setAlert] = useState({
-          message: '',
-          status: ''
-        })
+const Home = () => {
+  const { loggedIn } = useContext(MainContext)
+  const [posts, setPosts] = useState([])
+  const [alert, setAlert] = useState({
+    message: '',
+    status: ''
+  })
+  const [keyword, setKeyword] = useState('')
+  const [refresh, setRefresh] = useState(false)
+  const navigate = useNavigate()
+  
+      
+        // const Pagination = () => {
+        //   return (
+        //     <div className="pagination">
+        //       <button onClick={prev} disabled={page === 1 && 'disabled'}>previous</button>
+        //       <span>  you are on page  {page}</span>
+        //       <button onClick={next} disabled={page === total && 'disabled'}>next</button>
+        //     </div>
+        //   )
+        // }
       
         useEffect(() => {
           axios.get('/api/posts/')
@@ -31,37 +43,35 @@ const Home = (props) => {
           if(isNaN(id) || !loggedIn)
             return
           
-          axios.delete('/api/posts/delete/' + id, {
-            method: 'DELETE'
-          })
-          .then(resp => resp.json())
-          .then(resp => {
-            setAlert({
-              message: resp.message,
-              status: 'success'
+            axios.delete('/api/posts/delete/' + id)
+            .then(resp => {
+              setAlert({
+                message: resp.data.message,
+                status: 'success'
+              })
+              setRefresh(!refresh)
+              
+              window.scrollTo(0, 0)
             })
-
-            setRefresh(!refresh)
-          })
-          .catch(error => {
-            console.log(error)
-            setAlert({
-              message: error.response.data,
-              status: 'danger'
-            })
-            window.scrollTo(0,0)
-
-            if (error.reesponse.status === 401 )
-            setTimeout(() => Navigate('/login'), 2000)
-          })
-          .finally(() => {
-            setTimeout(() => setAlert({
-              message: '',
-              status: ''
-            }), 3000)
-          })
+            .catch(error => {
+              console.log(error)
+              setAlert({
+                message: error.response.data,
+                status: 'danger'
+              })
+              window.scrollTo(0, 0)
       
-        }
+              if(error.response.status === 401)
+                setTimeout(() => navigate('/login'), 2000)
+            })
+            .finally(() => {
+              setTimeout(() => setAlert({
+                message: '',
+                status: ''
+              }), 3000)
+            })
+            
+          }
 
         const handleSearch = (e) => {
           
@@ -119,21 +129,24 @@ const Home = (props) => {
                 return (
                   <div key={article.id} className="box">
                     <h3>{article.pavadinimas}</h3>
+                     
                     <div className="image" style={{backgroundImage:`url('${article.nuotrauka}')`, opacity: 1}}>
                       <img src={''} alt={''} />
                     </div>
+                    <Link to={'/post/' + article.id} className="btn">Skaityti plačiau</Link>
                    
-                    { loggedIn &&
+                    {/* { loggedIn &&
                     <>
                     <Link to={'/post/' + article.id} className="btn">Skaityti plačiau</Link>
                     <button onClick={() => handleDelete(article.id)} className="btn">Delete</button>
                     <Link to={'/edit/' + article.id} className="btn">Edit</Link>
                     </>
-                  }
+                  } */}
                   </div>
                  
                 )
               })}
+                    {/* <div>{isLoading ? 'LOADING...' : <Pagination />}</div> */}
             </div>
           </div>
         );

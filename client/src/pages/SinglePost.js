@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -8,12 +8,22 @@ import axios from 'axios'
 const SinglePost = () => {
     const { id } = useParams()
     const [post, setPost] = useState({})
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get('/api/posts/' + id)
         .then(resp => {
+            if(!resp.data) {
+                //Pirmąja reikšme perduodame adresą kuriuo nukreipiamas vartotojas negaunant jokios reikšmės
+                navigate('/')
+                return 
+            }
+
             setPost(resp.data)
-            console.log(post)
+        })
+        .catch((error) => {
+            console.log(error)
+            navigate('/')
         })
     }, [])
 

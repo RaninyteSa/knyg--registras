@@ -2,17 +2,31 @@ a.nav-link, a{
   text-decoration: none;
   color: rgb(253, 253, 253);
   font-size: smaller;
+  font-weight: 900;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   justify-content: center;
   text-align: center;
   
  
 }
+
+.table, th, td{
+  color: black;
+}
+
+textarea, input {
+  background: rgba(255,255,255,.2);
+  border: none;
+}
+
 form {
   margin-top: 10px;
   padding: 7%;
   font-size: 45px;
   color:  rgb(245, 245, 245);
+}
+.msg {
+  color: black;
 }
 h3, h1 {
   height: 25px;
@@ -67,7 +81,7 @@ div.image {
   color:  rgb(245, 245, 245);
   font-size: medium;
   text-align: center;
-  background-color: rgb(255 252 224);
+  background-color: rgb(255, 252, 224,.3 );
 }
 body {
   background-image: url('https://i.pinimg.com/originals/cf/d8/d3/cfd8d326c1acad9837ba5a28e2a5f05f.jpg');
@@ -80,6 +94,13 @@ body {
 
 }
 
+.containerrr {
+  background-color: rgb(255, 252, 224,.3 );
+  text-align: center;
+  margin: 5% auto;
+  width: max-content;
+}
+
 
 .single-post {
   border-radius: 25px;
@@ -88,7 +109,7 @@ body {
   width: 355px;
   margin: 0 auto;
   margin-top: 60px;
-  background-color:rgb(245, 238, 231);
+  background-color:rgb(245, 238, 231,.3);
   justify-content: center;
   text-align: center;
 
@@ -107,10 +128,12 @@ body {
 .contentt {
   color: black;
 }
- 
+ input#file-upload-button {
+  background-color: rgb(228, 201, 177,.5);
+ }
 
  .btn {
-  background-color: rgb(228, 201, 177);
+  background-color: rgb(228, 201, 177,.5);
   color:  rgb(245, 245, 245);
   margin: auto 5em;
   padding: 1px 8px;
@@ -149,7 +172,7 @@ body {
  .header {
   text-decoration: none;
   color:  rgb(245, 245, 245);
-  font-size: 40px;
+  font-size: 35px;
   font-family: monospace;
   justify-content: center;
   text-align: center;
@@ -163,6 +186,12 @@ body {
 
  }
 
+ table, th, td {
+  border: 1px solid;
+  padding: 4px;
+  font-weight: 900;
+  
+}
   .articles{
   justify-content: center;
   padding: 5px 0;
@@ -172,6 +201,49 @@ body {
   font-size: medium;
  } 
 .btn {
-  border-color: aliceblue;
+  border: none;
+  border-color: none;
  }
+
+ .pagination-container {
+  display: flex;
+  list-style-type: none;
+ }
+
+  .pagination-item {
+    padding: 0 12px;
+    height: 32px;
+    text-align: center;
+    margin: auto 4px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    letter-spacing: 0.01071em;
+    border-radius: 16px;
+    line-height: 1.43;
+    font-size: 13px;
+    min-width: 32px;
+  }
+
+    .btn:hover{
+      background-color: transparent;
+      cursor: default;
+    }
+    .box:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+    .selected {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .containerrr:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+   
+
+  
+
  

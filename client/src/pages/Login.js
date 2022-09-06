@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import MainContext from "../MainContext"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
-const Login = (props) => {
+const Login = () => {
 
-    const { setLoggedIn } = props
+    const { setLoggedIn, setUserInfo } = useContext(MainContext)
 
         const [form, setForm] = useState({
             email: '',
@@ -26,15 +27,17 @@ const Login = (props) => {
     
             axios.post('/api/users/login', form)
             .then(resp => {
-               localStorage.setItem('loggedIn', true)
                setLoggedIn(true)
-
+               setUserInfo(resp.data.user)
                setAlert({
-                    message: resp.data,
+                    message: resp.data.message,
                     status: 'success'
                 })
     
                 setTimeout(() => {
+                    if(resp.data.user.role === 1 )
+                    return navigate ('/admin')
+
                   navigate('/') 
                 
                 } , 1000) 

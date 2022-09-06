@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import MainContext from "../MainContext"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
-const Logout = (props) => {
-    const { setLoggedIn } = props
+const Logout = () => {
+    const { setLoggedIn, setUserInfo } = useContext(MainContext)
 
     const navigate = useNavigate()
 
@@ -17,8 +18,9 @@ const Logout = (props) => {
             withCredentials: true
         })
         .then( resp => {
-            localStorage.clear()
             setLoggedIn(false)
+            setUserInfo({})
+            
             setAlert({
                 message: resp.data,
                 status: 'success'
