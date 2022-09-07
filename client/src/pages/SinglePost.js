@@ -87,7 +87,7 @@ const SinglePost = () => {
                 }
             { loggedIn ?
             <div className='komentarai-kont'>
-                <h2 className='komentarai'>Palikite savo komentara</h2>
+                <h2 className='komentarai'>Palikite savo komentarą</h2>
                 {alert.message && (
                         <div className={'my-2 alert alert-' + alert.status}>
                         {alert.message}
@@ -99,12 +99,12 @@ const SinglePost = () => {
                     <textarea name='comment' onChange={(e) => setComment(e.target.value)}></textarea>   
                     </div>
                     <div>
-                        <button className='komentarai'>skelbti komentara</button>
+                        <button className='komentarai'>skelbti komentarą</button>
                     </div>
                 </form>
             </div>
             
-           : <div>'Prisijunkite norėdami palikti komentarą'</div> } 
+           : <div className='komentarai'>'Prisijunkite norėdami palikti komentarą'</div> } 
 
 
         </div>
